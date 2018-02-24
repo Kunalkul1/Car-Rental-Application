@@ -1,0 +1,25 @@
+<% if booking %>
+  <br>
+  This car has been booked by user:
+    <%= find_user_email %>
+    from <%= start_time %> to <%= end_time %>
+    <br><br>
+    <%= link_to 'Cancel reservation', delete_reservation_path(params[:id]), class: "btn btn-primary btn-md text-white" %>
+<% end %>
+<br>
+<br>
+<%= form_for :booking, :url => url_for(:controller => 'bookings', :action => 'reserve_for_user' ), :method => 'put' do |f| %>
+    User for which you want to book this car
+    <%= select_tag 'selected_user', options_for_select(normal_users), include_blank: false  %>
+    <br><br>
+    Select from date
+    <%= datetime_field(:booking, :time_start, min: Date.today, max: Date.today + 7.days, :step => 1.hour ,:discard_seconds => true) %>
+    <span style = "font-size: 12px">Format: yyyy-mm-dd hh:mm:ss</span>
+    <br><br>
+    Number of hours for which you want to rent the car:
+    <%=select_tag(:time_end, options_for_select(1..10))%>
+
+    <br><br>
+    <%= submit_tag 'Reserve', class: "btn btn-primary btn-md text-white" %>
+    <%= link_to 'Back', root_path, class: "btn btn-primary btn-md text-white" %>
+<% end %>

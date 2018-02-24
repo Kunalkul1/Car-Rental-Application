@@ -1,0 +1,11 @@
+<div class = "text-center">
+
+  OR
+
+<%= form_for car, :url => url_for(:controller => 'bookings', :action => 'reserve_now' ), :method => 'post' do |f| %>
+    Number of hours for which you want to rent the car:
+    <%= select_tag(:time_end, options_for_select(1..10)) %>
+    <br>
+    <%= submit_tag 'Rent immediately' %>
+<% end %>
+</div>

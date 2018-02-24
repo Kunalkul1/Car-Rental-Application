@@ -1,0 +1,52 @@
+<h6>Information about the car you have chosen: </h6>
+<div class = "text-center">
+<%= form_for car, :url => url_for(:controller => 'bookings', :action => 'reserve!' ), :method => 'post' do |f| %>
+    <% if car.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(car.errors.count, "error") %> prohibited this car from being saved:</h2>
+
+          <ul>
+            <% car.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <div class="field">
+      <table class = "table table-striped table-bordered">
+        <thead>
+        <tr>
+          <th>License plate</th>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>Hourly rental rate</th>
+          <th>Style</th>
+          <th>Location</th>
+          <th>Status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+              <td><%= link_to car.license_plate, car %></td>
+              <td><%= car.manufacturer %></td>
+              <td><%= car.model %></td>
+              <td><%= car.hourly_rental_rate %></td>
+              <td><%= car.style %></td>
+              <td><%= car.location %></td>
+              <td><%= car.status %></td>
+            </tr>
+        </tbody>
+      </table>
+
+      Select start time
+      <%= datetime_field(:booking, :time_start, min: Date.today, max: Date.today + 7.days, :step => 1.hour ,:discard_seconds => true) %>
+      <span style = "font-size: 12px">Format: yyyy-mm-dd hh:mm:ss</span>
+      <br>
+      Number of hours for which you want to rent the car:
+      <%=select_tag(:time_end, options_for_select(1..10))%>
+      <br>
+      <%= f.submit 'Reserve' %>
+    </div>
+<% end %>
+</div>

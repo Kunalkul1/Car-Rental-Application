@@ -1,0 +1,27 @@
+<t3>Checkout Details</t3>
+<table class = "table table-striped table-bordered">
+    <thead>
+  <tr>
+      <th>License plate</th>
+      <th>Model</th>
+      <th>Manufacturer</th>
+      <th>Booking start time</th>
+      <th>Booking end Time</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    Your pending rent is $ <%= calculate_rental_charge %>
+    <br>
+    <% @book1.each do |t| %>
+      <tr>
+        <td><%= license_plate(t) %></td>
+        <td><%= model(t) %></td>
+        <td><%= manufacturer(t) %></td>
+        <td><%= t.time_start %></td>
+        <td><%= t.time_end %></td>
+      </tr>
+    <%end%>
+  </tbody>
+</table>
+<%= link_to 'Back', root_path, class: "btn btn-primary btn-md text-white" %>

@@ -1,0 +1,26 @@
+<h3>List of customers</h3>
+
+<%user1 = User.where(admin: false ,super_admin: false) %>
+
+<table class = "table table-striped table-bordered" style = "width: 50%">
+
+<thead>
+  <tr>
+    <th>Email</th>
+    <th>Name</th>
+    <th colspan="3">Actions</th>
+  </tr>
+</thead>
+
+<%user1.each do |user| %>
+  <tbody>
+  <tr>
+    <td><%= user.email %> </td>
+    <td><%= user.name %></td>
+    <td><%= link_to 'Destroy', member_destroy_path(user.id), data: { confirm: "Are you sure?" } %></td>
+  </tr>
+  </tbody>
+<%end%>
+</table>
+
+<%= link_to 'Back',root_path, class: "btn btn-primary btn-md text-white" %>

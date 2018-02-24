@@ -1,0 +1,51 @@
+<tbody>
+<% @cars.each do |car| %>
+    <tr>
+      <td><%= link_to car.license_plate, car %></td>
+      <td><%= car.manufacturer %></td>
+      <td><%= car.model %></td>
+      <td><%= car.hourly_rental_rate %></td>
+      <td><%= car.style %></td>
+      <td><%= car.location %></td>
+      <td><%= car.status %></td>
+
+      <% if car.status == 'Checked out' %>
+        <% unless user_booking(current_user, car).exists? %>
+        <td><%= link_to 'Register for notification', request_for_notification_path(car.id, current_user.id) %></td>
+        <% end %>
+      <%end%>
+
+      <% if current_user.admin? || current_user.super_admin? %>
+         <td><%= link_to 'View checkout history', check_out_history_car_path(car.id) %></td>
+      <%end%>
+
+      <% if user_booking(current_user, car).exists? && check_time(current_user, car) %>
+          <% unless car.status == "Checked out" %>
+            <td><%= link_to 'Checkout car', checkout_car_path %></td>
+          <% end %>
+      <%end%>
+
+<% unless current_user_is_admin? && current_user_is_super_admin? %>
+
+    <% if user_booking(current_user, car).exists? %>
+      <td><%= link_to car.status == "Reserved" ? 'Cancel reservation' : 'Return car', delete_reservation_path(car) %></td>
+    <% else %>
+      <% if @user_has_booked_a_car || @booking %>
+        <td>Can't book!</td>
+      <% else %>
+        <td class = "link_color"><%= link_to 'Reserve or Rent', reserve_car_path(car) %></td>
+      <% end %>
+    <% end %>
+
+<% else %>
+    <td class = "link_color"><%= link_to 'Manage user reservations', reserve_car_for_user_path(car) %></td>
+<% end %>
+
+<% if current_user_is_admin? || current_user_is_super_admin? %>
+    <td class = "link_color"><%= link_to 'Edit', edit_car_path(car) %></td>
+    <td class = "link_color"><%= link_to 'Delete', car, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+<% end %>
+</tr>
+
+<% end %>
+</tbody>

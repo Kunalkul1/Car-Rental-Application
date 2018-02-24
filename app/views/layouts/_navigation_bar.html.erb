@@ -1,0 +1,24 @@
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded sticky-top">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span>Menu</span>
+  </button>
+  <%= render 'layouts/logout' %>
+  <div class="collapse navbar-collapse" id="navbarText">
+        <div class="nav-link colored_link" >
+          <h5><%= link_to "Home", root_path %></h5>
+
+          <%if !current_user.nil? %>
+              <h5><%=link_to 'Edit your profile', edit_user_registration_path%></h5>
+              <% unless current_user.super_admin? && current_user.admin? %>
+                <h5><%= link_to 'Your check out history', show_booking_history_path %></h5>
+              <% end %>
+
+              <% if current_user.super_admin? || current_user.admin? %>
+                <h5><%=link_to 'List of admins & super admins', admin_stuff_path %></h5>
+                <h5><%=link_to 'List of Customers', admin_watch_user_path%></h5>
+                <h5><%= link_to 'Edit a booking for a customer', bookings_path %></h5>
+              <% end %>
+          <%end%>
+        </div>
+  </div>
+</nav>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<%= javascript_include_tag :defaults %>
+
+
+<html>
+  <head>
+    <title>Car Rental App</title>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= render 'layouts/navigation_bar' %><br/>
+  </head>
+  <body>
+  <%unless current_user.nil?%>
+    <div class = "text-center">
+      <h2>Welcome, <%=current_user.name%>! </h2>
+    </div>
+  <%end%>
+  <div class = "text-center">
+    <%= yield %><br/>
+  </div>
+  </body>
+</html>
